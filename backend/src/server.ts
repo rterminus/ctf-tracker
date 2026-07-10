@@ -1,12 +1,12 @@
 // imports
-const express = require("express");
-const database = require("./db/database");
+import express, { Request, Response } from "express";
+import db from "./db/database"
 
 // app initialization + formatting
 const app = express();
 app.use(express.json());
 
-app.get("/ping", (req, res) => {
+app.get("/ping", (req: Request, res: Response) => {
   res.json({ message: "pong!" });
 });
 

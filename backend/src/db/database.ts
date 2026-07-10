@@ -1,8 +1,11 @@
-const sqlite3 = require("sqlite3").verbose();
-const path = require("path");
+import sqlite3 from "sqlite3";
+import path from "path";
 
 const dbPath = path.resolve(__dirname, "../../tracker.db");
-const db = new sqlite3.Database(dbPath, (err) => {
+
+sqlite3.verbose();
+
+const db = new sqlite3.Database(dbPath, (err: Error | null) => {
   if (err) {
     console.error("Error connecting to database: ", err);
   } else {
@@ -19,4 +22,4 @@ const db = new sqlite3.Database(dbPath, (err) => {
   }
 });
 
-module.exports = db;
+export default db;

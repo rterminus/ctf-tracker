@@ -1,6 +1,7 @@
 // imports
 import express, { Request, Response } from "express";
-import db from "./db/database"
+import { z } from "zod";
+import db from "./db/database";
 
 // app initialization + formatting
 const app = express();

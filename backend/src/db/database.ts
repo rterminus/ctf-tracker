@@ -9,7 +9,7 @@ const db = new sqlite3.Database(dbPath, (err: Error | null) => {
   if (err) {
     console.error("Error connecting to database: ", err);
   } else {
-    console.log("Conected to SQLite database.");
+    console.log("Connected to SQLite database.");
 
     db.run(`
       CREATE TABLE IF NOT EXISTS targets (

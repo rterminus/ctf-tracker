@@ -14,7 +14,7 @@ const targetSchema = z.object({
 });
 
 //// crud
-// create/POST
+// create/POST/INSERT
 app.post("/targets", (req: Request, res: Response) => {
   const validation = targetSchema.safeParse(req.body);
 
@@ -29,7 +29,7 @@ app.post("/targets", (req: Request, res: Response) => {
   return res.status(201).json({ message: "Target saved successfully." });
 });
 
-// read/GET
+// read/GET/SELECT
 app.get("/targets", (req: Request, res: Response) => {
   const read = db.prepare("SELECT * FROM targets ORDER BY created_at");
   const targets = read.all();
@@ -47,6 +47,29 @@ app.get("/targets/:id", (req: Request, res: Response) => {
   }
 
   return res.status(201).json(target);
+});
+
+// update/PUT/UPDATE
+app.put("/targets/:id", (req: Request, res: Response) => {
+  const id = req.params.id;
+  const validation = targetSchema.partial({ ip: true }).safeParse(req.body);
+
+  if (!validation.success) {
+    return res.status(400).json({ message: "Status not valid." });
+  }
+
+  const status = validation.data.status;
+
+  const update = db.prepare("UPDATE targets SET status = ? WHERE id = ?");
+  const target = update.run(status, id);
+
+  if (target.changes === 0) {
+    return res.status(404).json({ message: "Target not found." });
+  }
+
+  return res
+    .status(200)
+    .json({ message: "Target status modified successfully." });
 });
 
 // port listening

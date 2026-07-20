@@ -14,7 +14,7 @@ const targetSchema = z.object({
 });
 
 // crud
-app.post("/db", (req: Request, res: Response) => {
+app.post("/targets", (req: Request, res: Response) => {
   const validation = targetSchema.safeParse(req.body);
 
   if (!validation.success) {
@@ -26,6 +26,25 @@ app.post("/db", (req: Request, res: Response) => {
   insert.run(data.ip, data.status);
 
   return res.status(201).json({ message: "Target saved successfully." });
+});
+
+app.get("/targets", (req: Request, res: Response) => {
+  const select = db.prepare("SELECT * FROM targets ORDER BY created_at");
+  const targets = select.all();
+
+  return res.status(200).json(targets);
+});
+
+app.get("/targets/:id", (req: Request, res: Response) => {
+  const id = req.params.id;
+  const select = db.prepare("SELECT * FROM targets WHERE id = ?");
+  const target = select.get(id);
+
+  if (!target) {
+    return res.status(404).json({ message: "Target not found." });
+  }
+
+  return res.status(201).json(target);
 });
 
 // port listening

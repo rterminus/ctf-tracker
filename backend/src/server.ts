@@ -72,6 +72,20 @@ app.put("/targets/:id", (req: Request, res: Response) => {
     .json({ message: "Target status modified successfully." });
 });
 
+// delete
+app.delete("/targets/:id", (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  const del = db.prepare("DELETE FROM targets WHERE id = ?");
+  const target = del.run(id);
+
+  if (target.changes === 0) {
+    return res.status(404).json({ message: "Target not found." });
+  }
+
+  return res.status(204).send();
+});
+
 // port listening
 app.listen(3000, () => {
   console.log("Server running on port 3000!");

@@ -13,7 +13,8 @@ const targetSchema = z.object({
   status: z.enum(["Recon", "Rooted", "Abandoned"]),
 });
 
-// crud
+//// crud
+// create/POST
 app.post("/targets", (req: Request, res: Response) => {
   const validation = targetSchema.safeParse(req.body);
 
@@ -22,23 +23,24 @@ app.post("/targets", (req: Request, res: Response) => {
   }
 
   const data = validation.data;
-  const insert = db.prepare("INSERT INTO targets (ip, status) VALUES (?, ?)");
-  insert.run(data.ip, data.status);
+  const create = db.prepare("INSERT INTO targets (ip, status) VALUES (?, ?)");
+  create.run(data.ip, data.status);
 
   return res.status(201).json({ message: "Target saved successfully." });
 });
 
+// read/GET
 app.get("/targets", (req: Request, res: Response) => {
-  const select = db.prepare("SELECT * FROM targets ORDER BY created_at");
-  const targets = select.all();
+  const read = db.prepare("SELECT * FROM targets ORDER BY created_at");
+  const targets = read.all();
 
   return res.status(200).json(targets);
 });
 
 app.get("/targets/:id", (req: Request, res: Response) => {
   const id = req.params.id;
-  const select = db.prepare("SELECT * FROM targets WHERE id = ?");
-  const target = select.get(id);
+  const read = db.prepare("SELECT * FROM targets WHERE id = ?");
+  const target = read.get(id);
 
   if (!target) {
     return res.status(404).json({ message: "Target not found." });

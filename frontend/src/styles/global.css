@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @theme {
+  --font-sans: "Geist", sans serif;
+  --font-mono: "JetBrains Mono", monospace;
+
   --color-background: #020617;
   --color-surface: #0f172a;
 
@@ -33,6 +36,6 @@
 
 @layer utilities {
   .surface-panel {
-    @apply bg-surface border border-outline rounded-lg;
+    @apply bg-surface border-outline rounded-lg border;
   }
 }

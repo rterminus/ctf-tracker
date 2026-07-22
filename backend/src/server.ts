@@ -11,7 +11,7 @@ app.use(express.json());
 const targetSchema = z.object({
   ip: z.ipv4("IP format invalid."),
   name: z.string().min(1, "A name is required."),
-  status: z.enum(["recon", "rooted", "abandoned"], {
+  status: z.enum(["recon", "user", "rooted", "abandoned"], {
     message: "Invalid status. Valid: recon, rooted, abandoned",
   }),
 });
@@ -35,7 +35,7 @@ app.post("/targets", (req: Request, res: Response) => {
 });
 
 // read/GET/SELECT
-app.get("/targets", (req: Request, res: Response) => {
+app.get("/targets", (_, res: Response) => {
   const read = db.prepare("SELECT * FROM targets ORDER BY created_at");
   const targets = read.all();
 

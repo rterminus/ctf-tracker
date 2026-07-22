@@ -9,8 +9,11 @@ app.use(express.json());
 
 // schema for validation
 const targetSchema = z.object({
-  ip: z.ipv4(),
-  status: z.enum(["Recon", "Rooted", "Abandoned"]),
+  ip: z.ipv4("IP format invalid."),
+  name: z.string().min(1, "A name is required."),
+  status: z.enum(["recon", "user", "rooted", "abandoned"], {
+    message: "Invalid status. Valid: recon, rooted, abandoned",
+  }),
 });
 
 //// crud
@@ -23,14 +26,16 @@ app.post("/targets", (req: Request, res: Response) => {
   }
 
   const data = validation.data;
-  const create = db.prepare("INSERT INTO targets (ip, status) VALUES (?, ?)");
-  create.run(data.ip, data.status);
+  const create = db.prepare(
+    "INSERT INTO targets (ip, name, status) VALUES (?, ?, ?)",
+  );
+  create.run(data.ip, data.name, data.status);
 
   return res.status(201).json({ message: "Target saved successfully." });
 });
 
 // read/GET/SELECT
-app.get("/targets", (req: Request, res: Response) => {
+app.get("/targets", (_, res: Response) => {
   const read = db.prepare("SELECT * FROM targets ORDER BY created_at");
   const targets = read.all();
 
@@ -46,20 +51,21 @@ app.get("/targets/:id", (req: Request, res: Response) => {
     return res.status(404).json({ message: "Target not found." });
   }
 
-  return res.status(201).json(target);
+  return res.status(200).json(target);
 });
 
 // update/PUT/UPDATE
 app.put("/targets/:id", (req: Request, res: Response) => {
   const id = req.params.id;
-  const validation = targetSchema.partial({ ip: true }).safeParse(req.body);
+
+  const statusSchema = targetSchema.pick({ status: true });
+  const validation = statusSchema.safeParse(req.body);
 
   if (!validation.success) {
-    return res.status(400).json({ message: "Status not valid." });
+    return res.status(400).json(validation.error);
   }
 
   const status = validation.data.status;
-
   const update = db.prepare("UPDATE targets SET status = ? WHERE id = ?");
   const target = update.run(status, id);
 

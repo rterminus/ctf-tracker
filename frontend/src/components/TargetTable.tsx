@@ -3,9 +3,11 @@ import type { Target } from "../types";
 const TargetTable = ({
   data,
   onDelete,
+  onUpdate,
 }: {
   data: Target[];
   onDelete: (id: Target["id"]) => void;
+  onUpdate: (id: Target["id"], status: Target["status"]) => void;
 }) => {
   return (
     <div className="max-h-96 overflow-y-auto">
@@ -36,7 +38,20 @@ const TargetTable = ({
                 {i.ip}
               </th>
               <td className="p-3">{i.name}</td>
-              <td className="p-3">{i.status}</td>
+              <td className="p-3">
+                <select
+                  value={i.status}
+                  onChange={(e) =>
+                    onUpdate(i.id, e.target.value as Target["status"])
+                  }
+                  className="bg-background border-outline text-text-muted rounded-lg border p-2 transition-colors hover:text-white focus:outline-none"
+                >
+                  <option value="rooted">Rooted</option>
+                  <option value="user">User</option>
+                  <option value="recon">Recon</option>
+                  <option value="abandoned">Abandoned</option>
+                </select>
+              </td>
               <td className="p-3">{i.created_at}</td>
               <td>
                 <button

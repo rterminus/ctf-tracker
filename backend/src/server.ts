@@ -1,10 +1,12 @@
 // imports
 import express, { Request, Response } from "express";
 import { z } from "zod";
+import cors from "cors";
 import db from "./db/database";
 
 // app initialization + formatting
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // schema for validation
@@ -12,7 +14,7 @@ const targetSchema = z.object({
   ip: z.ipv4("IP format invalid."),
   name: z.string().min(1, "A name is required."),
   status: z.enum(["recon", "user", "rooted", "abandoned"], {
-    message: "Invalid status. Valid: recon, rooted, abandoned",
+    message: "Invalid status. Valid: recon, user, rooted, abandoned",
   }),
 });
 

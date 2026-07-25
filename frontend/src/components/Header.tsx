@@ -4,7 +4,7 @@ const Header = () => {
       <div className="flex items-center justify-center gap-8">
         <h2 className="text-2xl font-bold">Operation Area</h2>
         <button className="bg-primary hover:bg-primary-hover rounded-4xl px-6 py-4 text-xl font-bold transition-colors hover:text-white">
-          Add New Target
+          <span className="text-2xl">+  </span> Add New Target
         </button>
       </div>
       <p className="text-text-muted text-lg">Database Status: Connected</p>

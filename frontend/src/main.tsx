@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./styles/global.css";
 import App from "./App.tsx";
 import Dashboard from "./components/Dashboard.tsx";
-import History from "./components/History.tsx";
 import Stats from "./components/Stats.tsx";
 import NotFoundPage from "./NotFoundPage.tsx";
 
@@ -15,11 +14,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        Component: Dashboard,
+        element: <Dashboard viewMode="active" title="Active Bounties"/>,
       },
       {
         path: "history",
-        Component: History,
+        element: <Dashboard viewMode="history" title="History"/>,
       },
       {
         path: "stats",

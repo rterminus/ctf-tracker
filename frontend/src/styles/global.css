@@ -28,14 +28,4 @@
   :root {
     color-scheme: dark;
   }
-
-  body {
-    @apply bg-background text-text-primary antialiased;
-  }
-}
-
-@layer utilities {
-  .surface-panel {
-    @apply bg-surface border-outline rounded-lg border;
-  }
 }

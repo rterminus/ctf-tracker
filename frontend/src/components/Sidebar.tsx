@@ -9,7 +9,7 @@ const navItems = [
 const Sidebar = () => {
   return (
     <aside className="bg-background border-outline flex w-64 flex-col items-center border-r">
-      <div className="border-outline mx-auto w-full border-b p-8">
+      <div className="border-outline mx-auto w-full border-b p-8 max-h-24">
         <h1 className="text-center text-3xl font-bold">CTF Tracker</h1>
       </div>
       <nav className="text-text-muted flex flex-1 flex-col justify-start gap-4 px-4 py-4 text-xl font-semibold">
@@ -18,9 +18,9 @@ const Sidebar = () => {
             key={item.title}
             to={item.to}
             className={({ isActive }) =>
-              `flex items-center rounded-4xl px-4 py-3 text-lg font-medium transition-all ${
+              `flex items-center rounded-4xl px-4 py-3 text-center text-lg font-medium transition-all ${
                 isActive
-                  ? "bg-primary text-white"
+                  ? "bg-outline text-white"
                   : "text-text-muted hover:bg-outline hover:text-white"
               }`
             }

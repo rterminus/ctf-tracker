@@ -4,7 +4,6 @@ const Header = () => {
       <div className="flex items-center justify-center gap-8">
         <h2 className="text-2xl font-bold">Dashboard</h2>
       </div>
-      <p className="text-text-muted text-lg">Database Status: Connected</p>
     </header>
   );
 };

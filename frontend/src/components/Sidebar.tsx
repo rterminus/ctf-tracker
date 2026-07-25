@@ -20,7 +20,7 @@ const Sidebar = () => {
             className={({ isActive }) =>
               `flex items-center rounded-4xl px-4 py-3 text-center text-lg font-medium transition-all ${
                 isActive
-                  ? "bg-outline text-white"
+                  ? "bg-surface text-white"
                   : "text-text-muted hover:bg-outline hover:text-white"
               }`
             }

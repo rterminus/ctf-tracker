@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Target } from "../types";
+import Stats from "./Stats";
 import Panel from "./Panel";
 import TargetTable from "./TargetTable";
 
@@ -50,12 +51,14 @@ const Dashboard = ({
     <Panel title={title}>
       {isLoading ? (
         <p className="text-text-muted text-2xl">Connecting to database...</p>
+      ) : viewMode === "stats" ? (
+        <Stats data={targets} />
       ) : (
         <TargetTable
           data={
             viewMode === "active"
-              ? targets.filter((t) => t.status !== "abandoned")
-              : targets.filter((t) => t.status === "abandoned")
+              ? targets.filter((t) => t.status !== "abandoned" || "rooted")
+              : targets.filter((t) => t.status === "abandoned" || "rooted")
           }
           onDelete={handleDelete}
         />

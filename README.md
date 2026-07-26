@@ -4,7 +4,7 @@ A full-stack, high-performance dashboard designed for penetration testers and cy
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 | Layer          | Technology       |
 | :------------- | :--------------- |

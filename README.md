@@ -41,8 +41,7 @@ ctf-tracker/
 ├── backend/                  # API Server
 │   └── server.ts             # Express routes and Zod schemas
 ├── src/
-│   ├── components/           # React components (Dashboard, Panel, TargetTable,
-Modals)
+│   ├── components/           # React components (Dashboard, Panel, TargetTable, Modals)
 │   ├── types/                # TypeScript interfaces
 │   ├── App.tsx               # Main layout and routing wrapper
 │   └── main.tsx              # React entry point

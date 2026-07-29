@@ -51,7 +51,6 @@ ctf-tracker/
 ```
 
 2. **Install dependencies**
-   Install dependencies separately on front and backend:
 
 ```bash
    cd frontend
